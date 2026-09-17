@@ -4,13 +4,25 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "app.py"
+      - "requirements.txt"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/docker.yml"
 
   push:
     branches:
       - main
     tags:
       - "v*.*.*"
-
+    paths:
+      - "app.py"
+      - "requirements.txt"
+      - "Dockerfile"
+      - ".dockerignore"
+      - ".github/workflows/docker.yml"
+      
 jobs:
   docker:
     runs-on: ubuntu-latest
