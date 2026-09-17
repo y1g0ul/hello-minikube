@@ -36,7 +36,7 @@ jobs:
           images: y1g0ul/hello-minikube
           tags: |
             type=raw,value=latest,enable={{is_default_branch}}
-            type=sha
+            type=raw,value=sha-${{ github.sha }}
             type=ref,event=tag
 
       - name: Build and push Docker image
@@ -46,3 +46,34 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: docker
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+      - minikube
+
+    steps:
+      - name: Check Kubernetes cluster
+        run: |
+          kubectl get nodes
+          kubectl get deployment hello-minikube
+
+      - name: Deploy new image
+        run: |
+          kubectl set image deployment/hello-minikube \
+            hello-minikube=y1g0ul/hello-minikube:sha-${{ github.sha }}
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/hello-minikube --timeout=120s
+
+      - name: Show deployment state
+        run: |
+          kubectl get deployment hello-minikube
+          kubectl get pods -o wide
