@@ -5,7 +5,7 @@ Flask-приложение, упакованное в Docker-контейнер 
 ## Архитектура
 
 <p align="center">
-  <img src="docs/architecture.png" alt="Название картинки">
+  <img src="docs/architecture.png" alt="Архитектура">
 </p>
 
 Deployment следит за тем, чтобы в кластере постоянно работали две реплики приложения.
