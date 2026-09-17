@@ -1,55 +1,57 @@
-# Hello minikube
+# Hello Minikube
 
-Flask-приложение, упакованное в Docker-контейнер и развёрнутое в локальном Kubernetes-кластере Minikube. Приложение работает на порту 32777.
+Flask-приложение, упакованное в Docker и развёрнутое в локальном Kubernetes-кластере Minikube.
+
+Приложение работает на порту `32777` и возвращает ASCII Hello World.
+
+Docker image:
+
+```text
+y1g0ul/hello-minikube:v1.0.0
+```
 
 ## Архитектура
 
 <p align="center">
-  <img src="docs/architecture.png" alt="Архитектура">
+  <img src="docs/architecture.png" alt="Architecture">
 </p>
 
-Deployment следит за тем, чтобы в кластере постоянно работали две реплики приложения.
+Deployment поддерживает две реплики приложения.
 
-Service выбирает Pod по label `app: hello-minikube` и предоставляет единую точку доступа к ним.
+Service типа NodePort выбирает Pod по label `app: hello-minikube` и предоставляет к ним единую точку доступа.
 
+## Запуск
 
-## Структура проекта
-
-```text
-.
-├── k8s/
-│   ├── deployment.yaml
-│   └── service.yaml
-├── docs/
-│   ├── architecture.drawio
-│   ├── architecture.png
-│   └── screenshots/
-├── app.py
-├── Dockerfile
-└── requirements.txt
-```
-
-## Приложение
-
-Приложение написано на Python с использованием Flask.
-
-При обращении к корневому пути `/` возвращает:
-
-```text
-Hello World
-```
-
-Локальный запуск:
+Запустить Minikube:
 
 ```bash
-pip install -r requirements.txt
-python app.py
+minikube start --driver=docker
 ```
 
-После запуска приложение доступно по адресу:
+Развернуть приложение:
 
-```text
-http://localhost:32777
+```bash
+kubectl apply -f k8s/
+```
+
+Проверить состояние:
+
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl get services
+```
+
+Получить адрес приложения:
+
+```bash
+minikube service hello-minikube-service --url
+```
+
+Проверить ответ:
+
+```bash
+curl <service-url>
 ```
 
 ## Docker
@@ -57,83 +59,30 @@ http://localhost:32777
 Сборка образа:
 
 ```bash
-docker build -t hello-minikube:latest .
+docker build -t y1g0ul/hello-minikube:v1.0.0 .
 ```
 
-Запуск контейнера:
+Локальный запуск:
 
 ```bash
-docker run --rm -p 32777:32777 hello-minikube:latest
+docker run --rm -p 32777:32777 y1g0ul/hello-minikube:v1.0.0
 ```
 
-Docker-образ опубликован в Docker Hub:
+## Результат
 
-```text
-y1g0ul/hello-minikube:latest
-```
+<details>
+<summary>Скриншоты</summary>
 
-Скачать образ можно командой:
+### Pods
 
-```bash
-docker pull y1g0ul/hello-minikube:latest
-```
+![Pods](docs/screenshots/get-pods.png)
 
-## Kubernetes
+### Deployment и Service
 
-Для локального Kubernetes-кластера используется Minikube.
+![Deployment and Service](docs/screenshots/deployments-and-services.png)
 
-Запуск кластера:
+### Ответ приложения
 
-```bash
-minikube start --driver=docker
-```
+![Service response](docs/screenshots/service-response.png)
 
-Проверка состояния:
-
-```bash
-minikube status
-kubectl get nodes
-```
-
-Развёртывание приложения:
-
-```bash
-kubectl apply -f k8s/deployment.yaml
-```
-
-Deployment создаёт две реплики приложения.
-
-Проверка:
-
-```bash
-kubectl get deployments
-kubectl get pods
-```
-
-Создание Service:
-
-```bash
-kubectl apply -f k8s/service.yaml
-```
-
-Проверка:
-
-```bash
-kubectl get services
-```
-
-Service имеет тип NodePort и направляет запросы на порт 32777 контейнеров приложения.
-
-## Доступ к приложению
-
-Получить адрес Service:
-
-```bash
-minikube service hello-minikube-service --url
-```
-
-Или открыть приложение в браузере:
-
-```bash
-minikube service hello-minikube-service
-```
+</details>
