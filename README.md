@@ -130,21 +130,7 @@ minikube service hello-minikube-service
 
 ## Архитектура
 
-```text
-Browser
-   |
-   v
-NodePort Service
-   |
-   +----------------+
-   |                |
-   v                v
-Pod 1              Pod 2
-   |                |
-   v                v
-Container          Container
-Flask :32777       Flask :32777
-```
+![Схема](docs/architecture..png)
 
 Deployment следит за тем, чтобы в кластере постоянно работали две реплики приложения.
 
