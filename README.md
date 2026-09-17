@@ -22,7 +22,8 @@ Service выбирает Pod по label `app: hello-minikube` и предост�
 │   └── service.yaml
 ├── docs/
 │   ├── architecture.drawio
-│   └── architecture.png
+│   ├── architecture.png
+│   └── screenshots/
 ├── app.py
 ├── Dockerfile
 └── requirements.txt
