@@ -1,0 +1,46 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="EWOWnGbl1iHlt3F24uT8">
+    <mxGraphModel dx="2054" dy="1151" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-11" edge="1" parent="1" source="QLshRTLAFhLZRvWbK_Nt-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#23445D;" target="QLshRTLAFhLZRvWbK_Nt-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#182E3E;strokeColor=#FFFFFF;fontColor=#FFFFFF;" value="Browser" vertex="1">
+          <mxGeometry height="60" width="120" x="354" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-9" edge="1" parent="1" source="QLshRTLAFhLZRvWbK_Nt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#23445D;" target="QLshRTLAFhLZRvWbK_Nt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-10" edge="1" parent="1" source="QLshRTLAFhLZRvWbK_Nt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#23445D;" target="QLshRTLAFhLZRvWbK_Nt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#182E3E;strokeColor=#FFFFFF;fontColor=#FFFFFF;" value="&lt;div&gt;hello-minikube-service&lt;/div&gt;&lt;div&gt;Service: NodePort&lt;/div&gt;&lt;div&gt;port: 32777&lt;/div&gt;&lt;div&gt;targetPort: 32777&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="334" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=#182E3E;" value="&lt;div&gt;Pod 1&lt;/div&gt;&lt;div&gt;app=hello-minikube&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Flask container&lt;/div&gt;&lt;div&gt;port: 32777&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="144" x="240" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=#182E3E;" value="&lt;div&gt;Pod 2&lt;/div&gt;&lt;div&gt;app=hello-minikube&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Flask container&lt;/div&gt;&lt;div&gt;port: 32777&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="144" x="450" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-13" edge="1" parent="1" source="QLshRTLAFhLZRvWbK_Nt-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#23445D;dashed=1;endArrow=block;endFill=0;" target="QLshRTLAFhLZRvWbK_Nt-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-14" edge="1" parent="1" source="QLshRTLAFhLZRvWbK_Nt-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#23445D;dashed=1;endArrow=block;endFill=0;" target="QLshRTLAFhLZRvWbK_Nt-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFFFFF;fontColor=#FFFFFF;fillColor=#182E3E;" value="&lt;div&gt;Deployment&lt;/div&gt;&lt;div&gt;hello-minikube&lt;/div&gt;&lt;div&gt;replicas: 2&lt;/div&gt;" vertex="1">
+          <mxGeometry height="60" width="130" x="349" y="555" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#001DBC;fillColor=light-dark(#182E3E,#B9CCDA);align=center;verticalAlign=middle;rounded=0;fontColor=#ffffff;dashed=1;dashPattern=1 2;opacity=90;fontSize=10;labelBackgroundColor=none;" value="selector: app=hello-minikube" vertex="1">
+          <mxGeometry height="20" width="136" x="346" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="QLshRTLAFhLZRvWbK_Nt-18" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=#001DBC;fillColor=light-dark(#182E3E,#B9CCDA);align=center;verticalAlign=middle;rounded=0;fontColor=#ffffff;dashed=1;dashPattern=1 2;opacity=90;fontSize=10;" value="HTTP" vertex="1">
+          <mxGeometry height="20" width="40" x="394" y="210" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
