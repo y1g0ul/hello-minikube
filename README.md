@@ -1,8 +1,15 @@
 # Hello minikube
 
-Flask-приложение, упакованное в Docker-контейнер и развёрнутое в локальном Kubernetes-кластере Minikube.
+Flask-приложение, упакованное в Docker-контейнер и развёрнутое в локальном Kubernetes-кластере Minikube. Приложение работает на порту 32777.
 
-Приложение работает на порту 32777.
+## Архитектура
+
+![Схема](docs/architecture..png)
+
+Deployment следит за тем, чтобы в кластере постоянно работали две реплики приложения.
+
+Service выбирает Pod по label `app: hello-minikube` и предоставляет единую точку доступа к ним.
+
 
 ## Структура проекта
 
@@ -13,7 +20,7 @@ Flask-приложение, упакованное в Docker-контейнер 
 │   └── service.yaml
 ├── docs/
 │   ├── architecture.drawio
-│   └── screenshots/
+│   └── architecture.png
 ├── app.py
 ├── Dockerfile
 └── requirements.txt
@@ -127,11 +134,3 @@ minikube service hello-minikube-service --url
 ```bash
 minikube service hello-minikube-service
 ```
-
-## Архитектура
-
-![Схема](docs/architecture..png)
-
-Deployment следит за тем, чтобы в кластере постоянно работали две реплики приложения.
-
-Service выбирает Pod по label `app: hello-minikube` и предоставляет единую точку доступа к ним.
