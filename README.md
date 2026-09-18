@@ -23,7 +23,7 @@ Service типа NodePort выбирает Pod по label `app: hello-minikube` 
 
 ## Запуск
 
-Установить Docker, kubectl и Minikube по [официальной инструкции](https://minikube.sigs.k8s.io/docs/start/), затем запустить кластер:
+Установить Docker, kubectl и Minikube, затем запустить кластер:
 
 ```bash
 minikube start --driver=docker
@@ -174,4 +174,4 @@ y1g0ul/hello-minikube:sha-<commit SHA>
 
 </details>
 
-Отчёт с ответами на вопросы и результатами работы: [PDF](docs/DevOps_test.pdf), [редактируемый DOCX](docs/DevOps_test.docx).
+Отчёт с ответами на вопросы и результатами работы: [PDF](docs/DevOps_test.pdf).
