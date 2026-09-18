@@ -4,11 +4,7 @@ Flask-приложение, упакованное в Docker и развёрну
 
 Приложение работает на порту `32777` и возвращает ASCII Hello World.
 
-Docker Hub:
-
-```text
-y1g0ul/hello-minikube
-```
+Docker Hub: [y1g0ul/hello-minikube](https://hub.docker.com/r/y1g0ul/hello-minikube).
 
 Для `main` автоматически публикуются образы с тегами:
 
@@ -27,7 +23,7 @@ Service типа NodePort выбирает Pod по label `app: hello-minikube` 
 
 ## Запуск
 
-Запустить Minikube:
+Установить Docker, kubectl и Minikube по [официальной инструкции](https://minikube.sigs.k8s.io/docs/start/), затем запустить кластер:
 
 ```bash
 minikube start --driver=docker
@@ -37,7 +33,10 @@ minikube start --driver=docker
 
 ```bash
 kubectl apply -f k8s/
+kubectl rollout status deployment/hello-minikube --timeout=120s
 ```
+
+Для первого запуска манифест использует опубликованный образ `latest`. Настройка `imagePullPolicy: Always` заставляет Kubernetes проверять актуальный образ при каждом запуске контейнера.
 
 Проверить состояние:
 
@@ -47,7 +46,7 @@ kubectl get pods
 kubectl get services
 ```
 
-Получить адрес приложения:
+Получить адрес приложения через NodePort:
 
 ```bash
 minikube service hello-minikube-service --url
@@ -59,25 +58,46 @@ minikube service hello-minikube-service --url
 curl <service-url>
 ```
 
+### Доступ через браузер с пробросом портов
+
+На машине с Minikube запустить:
+
+```bash
+kubectl port-forward service/hello-minikube-service 32777:32777
+```
+
+Открыть в браузере `http://localhost:32777`. Терминал с пробросом портов должен оставаться открытым.
+
+В моём случае Minikube работает на отдельной VM. Для доступа с основного компьютера используется SSH-туннель вместе с `kubectl port-forward`:
+
+```bash
+ssh -L 32777:127.0.0.1:32777 user@192.168.1.83 \
+  'kubectl port-forward service/hello-minikube-service 32777:32777'
+```
+
+После этого приложение доступно в браузере основного компьютера по адресу `http://localhost:32777`. При повторении на другой VM нужно заменить SSH-адрес на свой.
+
+На Linux с Docker driver команда `minikube service ... --url` возвращает адрес NodePort без создания туннеля. Проброс локального порта в примере выше выполняется отдельно.
+
 ## Docker
 
 Сборка образа:
 
 ```bash
-docker build -t y1g0ul/hello-minikube:v1.0.0 .
+docker build -t y1g0ul/hello-minikube:latest .
 ```
 
 Локальный запуск:
 
 ```bash
-docker run --rm -p 32777:32777 y1g0ul/hello-minikube:v1.0.0
+docker run --rm -p 32777:32777 y1g0ul/hello-minikube:latest
 ```
 
 ## CI/CD
 
 Для проекта настроен CI/CD через GitHub Actions.
 
-При Pull Request в `main` Docker image собирается для проверки, но не публикуется в Docker Hub.
+При Pull Request в `main`, затрагивающем приложение, Dockerfile, зависимости или настройки сборки, Docker image собирается для проверки, но не публикуется в Docker Hub.
 
 При push в `main`, если изменились файлы, влияющие на приложение или сборку контейнера:
 
@@ -85,9 +105,13 @@ docker run --rm -p 32777:32777 y1g0ul/hello-minikube:v1.0.0
 2. Image публикуется в Docker Hub с тегами `latest` и `sha-<commit SHA>`.
 3. После успешной сборки запускается deploy job.
 4. Deploy job выполняется на self-hosted runner, установленном на отдельной VM с Minikube.
-5. Runner обновляет image Kubernetes Deployment.
+5. Runner применяет манифесты Service и Deployment, подставив в Deployment SHA-тег нового image.
 6. Kubernetes выполняет rolling update двух реплик приложения.
 7. Workflow ожидает успешного завершения rollout.
+
+Если push в `main` меняет только манифесты в `k8s/`, сборка образа пропускается. Deploy job применяет манифесты и сохраняет image, который уже используется в Deployment. Если Deployment ещё не создан, используется `latest` из манифеста.
+
+Каталог `k8s/` остаётся в `.dockerignore`: манифесты нужны при деплое, но не внутри Docker image.
 
 Схема процесса:
 
@@ -117,6 +141,10 @@ y1g0ul/hello-minikube:sha-<commit SHA>
 
 Это позволяет однозначно определить, какой Git commit сейчас развёрнут в Kubernetes.
 
+После деплоя через CI/CD в кластере используется SHA-тег, а в исходном манифесте для первого запуска указан `latest`. Последующие изменения манифестов применяются через CI/CD с сохранением текущего image, если новая сборка не нужна. Ручной `kubectl apply -f k8s/` переключит Deployment обратно на `latest`.
+
+Обновление тега `latest` в Docker Hub само по себе не перезапускает работающие Pod. Для обновления вручную при использовании `latest` нужен `kubectl rollout restart deployment/hello-minikube`; CI/CD запускает обновление сменой SHA-тега.
+
 Изменения документации, например `README.md` или файлов в `docs/`, не требуют сборки нового Docker image и не запускают deployment.
 
 ## Результат
@@ -136,4 +164,14 @@ y1g0ul/hello-minikube:sha-<commit SHA>
 
 ![Service response](docs/screenshots/service-response.png)
 
+### Ответ приложения в браузере
+
+![Browser response](docs/screenshots/browser.png)
+
+### CI/CD
+
+![CI/CD](docs/screenshots/cicd.png)
+
 </details>
+
+Отчёт с ответами на вопросы и результатами работы: [PDF](docs/DevOps_test.pdf), [редактируемый DOCX](docs/DevOps_test.docx).

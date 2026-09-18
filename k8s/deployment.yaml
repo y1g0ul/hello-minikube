@@ -19,6 +19,7 @@ spec:
     spec:
       containers:
         - name: hello-minikube
-          image: y1g0ul/hello-minikube:v1.0.0
+          image: y1g0ul/hello-minikube:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 32777
