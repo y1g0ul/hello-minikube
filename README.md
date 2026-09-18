@@ -174,4 +174,4 @@ y1g0ul/hello-minikube:sha-<commit SHA>
 
 </details>
 
-Отчёт с ответами на вопросы и результатами работы: [PDF](docs/DevOps_test.pdf).
+Отчёт с ответами на вопросы и результатами работы: [PDF](docs/DevOps_test.pdf)
