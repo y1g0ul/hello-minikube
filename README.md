@@ -46,19 +46,7 @@ kubectl get pods
 kubectl get services
 ```
 
-Получить адрес приложения через NodePort:
-
-```bash
-minikube service hello-minikube-service --url
-```
-
-Проверить ответ:
-
-```bash
-curl <service-url>
-```
-
-### Доступ при запуске на виртуальной машине
+### Доступ при запуске Minikube на основном компьютере
 
 На машине с Minikube запустить:
 
@@ -66,18 +54,16 @@ curl <service-url>
 kubectl port-forward service/hello-minikube-service 32777:32777
 ```
 
-Открыть в браузере `http://localhost:32777`. Терминал с пробросом портов должен оставаться открытым.
+Открыть в браузере `http://localhost:32777`.
 
-В моём случае Minikube работает на отдельной VM. Для доступа с основного компьютера используется SSH-туннель вместе с `kubectl port-forward`:
+### Доступ при запуске Minikube на виртуальной машине
+
+В случае если Minikube работает на отдельной VM. Вместо предыдущей команды на основном компьютере запустить SSH-туннель вместе с `kubectl port-forward`:
 
 ```bash
-ssh -L 32777:127.0.0.1:32777 user@192.168.1.83 \
+ssh -L 32777:127.0.0.1:32777 USERNAME@IP \
   'kubectl port-forward service/hello-minikube-service 32777:32777'
 ```
-
-После этого приложение доступно в браузере основного компьютера по адресу `http://localhost:32777`. При повторении на другой VM нужно заменить SSH-адрес на свой.
-
-На Linux с Docker driver команда `minikube service ... --url` возвращает адрес NodePort без создания туннеля. Проброс локального порта в примере выше выполняется отдельно.
 
 ## Docker
 
