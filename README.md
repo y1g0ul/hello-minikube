@@ -58,7 +58,7 @@ minikube service hello-minikube-service --url
 curl <service-url>
 ```
 
-### Доступ через браузер с пробросом портов
+### Доступ при запуске на виртуальной машине
 
 На машине с Minikube запустить:
 
