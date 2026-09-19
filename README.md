@@ -146,6 +146,10 @@ y1g0ul/hello-minikube:sha-<commit SHA>
 
 ![Deployment and Service](docs/screenshots/deployments-and-services.png)
 
+### Ответ приложения через NodePort
+
+![Browser response](docs/screenshots/service-response.png)
+
 ### Ответ приложения в браузере
 
 ![Browser response](docs/screenshots/browser.png)
